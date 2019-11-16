@@ -2,6 +2,7 @@
 
 #importing modules
 from random import randint
+import threading
 
 #importing the contents of the file game.txt
 f = open("game.txt","r")
@@ -12,6 +13,13 @@ class Score(object):
     score = 0
     k = 0
     life = 3
+    flag = 0
+
+#for threading timer
+def timeUp():
+    print("Times Up!.....\nYou can still guess the correct answer but your score will not be increased : ")
+    Score.flag = 1
+
 
 
 class Scene(object):#Scene class
@@ -20,7 +28,7 @@ class Scene(object):#Scene class
 
 class Game(Scene):#inheritng from scene class
     def enter(self):
-        
+        Score.flag = 0
         l2 = []
         b = game[Score.k]
         Score.k = Score.k+1
@@ -41,19 +49,33 @@ class Game(Scene):#inheritng from scene class
             else:
                 print(c[j],end = " ")
         print("\n")
+        timer = threading.Timer(25.0,timeUp)
+        timer.start()
         answer = input("Guess the correct word : ")
         if(answer==b):
-            Score.score = Score.score + 10
-            if(Score.k == len(game)):
-                return "over"
+            if(Score.flag==1):
+                Score.flag = 0
+            else:
+                timer.cancel()
+                Score.score = Score.score + 10
+                print(f"Wohoo! You made it.\nYour score is : {Score.score}\n")
+            
+                if(Score.k == len(game)):
+                    return "over"
             
         else:
-            Score.score = Score.score - 5
-            Score.life = Score.life - 1
-            if(Score.life == 0):
-                return "lifeN"
-            elif(Score.k == len(game)):
-                return "over"
+            if(Score.flag==1):
+                Score.flag = 0
+            else:
+                timer.cancel()
+                Score.score = Score.score - 5
+                Score.life = Score.life - 1
+                print(f"Ahaa!! Wrong answer.\nCorrect answer is : {b}\nYour score is : {Score.score}\n")
+            
+                if(Score.life == 0):
+                    return "lifeN"
+                elif(Score.k == len(game)):
+                    return "over"
 
 
         prompt = input("Would you like to continue[Yes(y)/No(n)] : ")
