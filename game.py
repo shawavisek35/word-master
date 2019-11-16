@@ -31,7 +31,7 @@ class Game(Scene):#inheritng from scene class
         Score.flag = 0
         l2 = []
         b = game[Score.k]
-        Score.k = Score.k+1
+        Score.k = Score.k+1#next question
         c = list(b)
         d = randint(3,4)
         for i in range(d):
@@ -40,7 +40,7 @@ class Game(Scene):#inheritng from scene class
                 i = i-1
             else:
                 l2.append(h)
-        
+        #printing incomplete word
         print("Word : ",end = " ")
 
         for j in range(len(c)):
@@ -49,14 +49,19 @@ class Game(Scene):#inheritng from scene class
             else:
                 print(c[j],end = " ")
         print("\n")
+
+        #for another thread for the timer
         timer = threading.Timer(25.0,timeUp)
-        timer.start()
+        timer.start()#starting the second thread
         answer = input("Guess the correct word : ")
         if(answer==b):
+            #if the user does not give answer
             if(Score.flag==1):
                 Score.flag = 0
+
+            #if the user gave the answer
             else:
-                timer.cancel()
+                timer.cancel()#ending the second thread
                 Score.score = Score.score + 10
                 print(f"Wohoo! You made it.\nYour score is : {Score.score}\n")
             
