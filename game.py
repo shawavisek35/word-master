@@ -107,7 +107,7 @@ class Game(Scene):#inheritng from scene class
             #if the user does not give answer
             if(Score.flag==1):
                 Score.flag = 0
-                Score.score = Score.score - 5
+                
                 print(f"Time is up but Your answer is correct so we will not make any changes to your current score.\nYour Score is : {Score.score}")
                 speak(f"Time is up but Your answer is correct so we will not make any changes to your current score and Your Score is : {Score.score}")
 
