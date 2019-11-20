@@ -104,7 +104,7 @@ class Game(Scene):#inheritng from scene class
         print("\n")
 
         #for another thread for the timer
-        timer = threading.Timer(9.0,timeUp)
+        timer = threading.Timer(10.0,timeUp)
         timer.start()#starting the second thread
         print("Guess the correct word.....")
         #answe = "none"
@@ -222,15 +222,17 @@ if __name__=="__main__":
             print("*********************Welcome to the game of Word Master***************************")
             speak("Welcome to the game of Word Master.")
             print("""The rules of the game are : 
-            1.Your have only 3 lifes.
+            1.Your have only 3 lives.
             2.Each correct answer will give you 10 points.
             3.Each wrong answer will deduct 5 from your total score
-            4.You have 5 seconds to answer a particural question""")
+            4.You have 5 seconds to answer a particular question""")
             speak("""The rules of the game are : 
             1 Your have only 3 lifes.
             2 Each correct answer will give you 10 points.
             3 Each wrong answer will deduct 5 from your total score
-            4 You have 5 seconds to answer a particural question""")
+            4 You have 5 seconds to answer a particular question""")
+
+            time.sleep(1)
             
             a = Map("game")
             gi = Engine(a)
