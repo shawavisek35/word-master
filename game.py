@@ -38,10 +38,13 @@ def takeCommand():
             print("Recognizing..............")
             query = r.recognize_google(audio, language="en-in")
             print(f"you said.......{query}\n")
-        except Exception as e:
-            print(f"say that again please........{e}")
-            return "None"
+            
+        
+        except Exception:
+            query = "none"
+        
         return query
+        
 
 def wishMe():
     hour = int(datetime.datetime.now().hour)
@@ -52,7 +55,7 @@ def wishMe():
     else:
         speak("Good Evening")
 
-    speak("Hello game player I am Abhishek How can i help you!")
+    speak("Hello game player we are team ligers How can i help you!")
 
 #class for calculating the score
 class Score(object):
@@ -64,7 +67,7 @@ class Score(object):
 #for threading timer
 def timeUp():
     print("Times Up!.....\nYou can still guess the correct answer but your score will not be increased : ")
-    speak("Time's up ! but you can still guess the correct answer but your score will not be calculated")
+    #speak("Time's up ! but you can still guess the correct answer but your score will not be calculated")
     Score.flag = 1
 
 
@@ -88,6 +91,8 @@ class Game(Scene):#inheritng from scene class
             else:
                 l2.append(h)
         #printing incomplete word
+        print(f"Your remaining life : {Score.life}")
+        speak(f"Your remaining life is {Score.life}")
         speak("Your incomplete word is")
         print("Word : ",end = " ")
 
@@ -99,10 +104,16 @@ class Game(Scene):#inheritng from scene class
         print("\n")
 
         #for another thread for the timer
-        timer = threading.Timer(25.0,timeUp)
+        timer = threading.Timer(9.0,timeUp)
         timer.start()#starting the second thread
         print("Guess the correct word.....")
-        answer = (takeCommand()).split(" ")
+        #answe = "none"
+        #while(answe=="none"):
+        #    print("You didn't say anything")
+        #    print("try saying it once again")
+        time.sleep(2)
+        answe = takeCommand()
+        answer = answe.split(" ")
         if(b in answer):
             #if the user does not give answer
             if(Score.flag==1):
@@ -125,6 +136,7 @@ class Game(Scene):#inheritng from scene class
             if(Score.flag==1):
                 Score.flag = 0
                 Score.score = Score.score - 5
+                Score.life = Score.life - 1
                 print(f"Time is up and your answer is wrong .\nCorrect answer is : {b}\nYour score is : {Score.score}\n")
                 speak(f"Time is up and your answer is wrong and Correct answer is : {b} and Your score is : {Score.score}")
             else:
@@ -141,8 +153,8 @@ class Game(Scene):#inheritng from scene class
 
         print("Would you like to continue[Yes(y)/No(n)] : ")
         speak("Would you like to continue.")
-        prompt = takeCommand()
-        if(prompt == 'n' or prompt == 'no' or prompt == 'No'):
+        prompt = takeCommand().split(" ")
+        if("no" in prompt):
             return "end"
         else:
             return "game"
@@ -202,12 +214,24 @@ class Engine(object):
 
 if __name__=="__main__":
     wishMe()
-    query = takeCommand()
+    
     while True :
+        query = takeCommand()
         
         if (("game" in query) or ("play" in query)):
             print("*********************Welcome to the game of Word Master***************************")
             speak("Welcome to the game of Word Master.")
+            print("""The rules of the game are : 
+            1.Your have only 3 lifes.
+            2.Each correct answer will give you 10 points.
+            3.Each wrong answer will deduct 5 from your total score
+            4.You have 5 seconds to answer a particural question""")
+            speak("""The rules of the game are : 
+            1 Your have only 3 lifes.
+            2 Each correct answer will give you 10 points.
+            3 Each wrong answer will deduct 5 from your total score
+            4 You have 5 seconds to answer a particural question""")
+            
             a = Map("game")
             gi = Engine(a)
             gi.play()
@@ -216,4 +240,4 @@ if __name__=="__main__":
             break
 
         
-        query = takeCommand()
+        #query = takeCommand()
