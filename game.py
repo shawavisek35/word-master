@@ -41,7 +41,8 @@ def takeCommand():
             
         
         except Exception:
-            query = "none"
+            print("Say again.................")
+            return "none"
         
         return query
         
@@ -104,15 +105,15 @@ class Game(Scene):#inheritng from scene class
         print("\n")
 
         #for another thread for the timer
-        timer = threading.Timer(10.0,timeUp)
+        timer = threading.Timer(8.0,timeUp)
         timer.start()#starting the second thread
         print("Guess the correct word.....")
-        #answe = "none"
-        #while(answe=="none"):
-        #    print("You didn't say anything")
-        #    print("try saying it once again")
-        time.sleep(2)
-        answe = takeCommand()
+        answe = "none"
+        while(answe=="none"):
+            answe = takeCommand()
+            
+        
+        #answe = takeCommand()
         answer = answe.split(" ")
         if(b in answer):
             #if the user does not give answer
