@@ -10,3 +10,5 @@ A simple word game
     
 # Instructions to play the game
 step 1: clone this repo.
+step 2: Run the command "python game.py"
+and there you go play the game and enjoy.
