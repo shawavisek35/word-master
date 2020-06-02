@@ -7,3 +7,6 @@ A simple word game
     3.Create a web application
     4.Use of AI in this project
     5.giving levels
+    
+# Instructions to play the game
+step 1: clone this repo.
