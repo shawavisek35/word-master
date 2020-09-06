@@ -1,5 +1,10 @@
 # WordMaster
 A simple word game 
+
+# Description
+        A small python script for playing a word game. The User will be asked an incomplete word and he/she needs to complete that word within a given time.
+        The special feature of this game is that you do not need to use your keyboard while playing the game.
+        
 # Modules used : 
         1. Python Text to Speech : pyttsx3 - for converting text to speech,
         2. Speech Recognition : speech_recognition - for recognizing your speech
