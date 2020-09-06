@@ -1,14 +1,17 @@
 # WordMaster
 A simple word game 
-
-#Things to do in the future
-    1.Implement multithreading system so that the user can type or say simultaneously
-    2.Create an app
-    3.Create a web application
-    4.Use of AI in this project
-    5.giving levels
+# Modules used : 
+        1. Python Text to Speech : pyttsx3 - for converting text to speech,
+        2. Speech Recognition : speech_recognition - for recognizing your speech
+        
+# Future Scope : 
+        1.Use of Multi threading,
+        2.Create a mobile app using Kivy or any other framework,
+        3.Implementation of AI for making it more better,
+        4.Add levels,
+        5.Adding more words
     
 # Instructions to play the game
-step 1: clone this repo.
-step 2: Run the command "python game.py"
-and there you go play the game and enjoy.
+    step 1: clone this repo.
+    step 2: Run the command "python game.py"
+    and there you go play the game and enjoy.
