@@ -84,7 +84,7 @@ class Game(Scene):#inheritng from scene class
         b = game[Score.k]
         Score.k = Score.k+1#next question
         c = list(b)
-        d = randint(3,4)
+        d = randint(2,len(b) - 1)
         for i in range(d):
             h = randint(0,len(c) - 1)
             if(h in l2):
@@ -225,12 +225,12 @@ if __name__=="__main__":
             print("""The rules of the game are : 
             1.Your have only 3 lives.
             2.Each correct answer will give you 10 points.
-            3.Each wrong answer will deduct 5 from your total score
+            3.Each wrong answer will deduct 5 points from your total score
             4.You have 5 seconds to answer a particular question""")
             speak("""The rules of the game are : 
             1 Your have only 3 lifes.
             2 Each correct answer will give you 10 points.
-            3 Each wrong answer will deduct 5 from your total score
+            3 Each wrong answer will deduct 5 points from your total score
             4 You have 5 seconds to answer a particular question""")
 
             time.sleep(1)
