@@ -1,0 +1,68 @@
+emotion
+Turtle
+lonely
+fruits
+Apples
+Apricots 
+Avocados
+Bananas
+Blueberries
+Cherries
+Cucumbers
+Dates
+Dragon Fruit
+Grapes
+Guava
+Jackfruit
+Kitten
+Goldfish
+Turkey
+Melon
+Mulberry
+Lychee
+Lemon
+Olive
+Oranges
+Papaya
+Peach
+Pear
+Pineapple
+Strawberries
+Tomato
+Watermelon
+Bald eagle
+Flamingo
+Seagull
+Ostrich
+Swallow
+Woodpecker
+Black bird
+Squirrel
+Chimpanzee
+Walrus
+Kangaroo
+Hippopotamus
+Hedgehong
+Octopus
+Shark
+Seahorse
+Walrus
+Starfish
+Whale
+Penguin
+Jellyfish
+Squid
+Lobster
+Pelican
+Clams
+Seagull
+Dolphin
+Shells
+Sea urchin
+Cormorant
+Otter
+Pelican
+Sea anemone
+Sea turtle
+Sea lion
+Coral
