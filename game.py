@@ -223,12 +223,12 @@ if __name__=="__main__":
             print("*********************Welcome to the game of Word Master***************************")
             speak("Welcome to the game of Word Master.")
             print("""The rules of the game are : 
-            1.Your have only 3 lives.
+            1.You have only 3 lives.
             2.Each correct answer will give you 10 points.
             3.Each wrong answer will deduct 5 points from your total score
             4.You have 5 seconds to answer a particular question""")
             speak("""The rules of the game are : 
-            1 Your have only 3 lifes.
+            1 You have only 3 lifes.
             2 Each correct answer will give you 10 points.
             3 Each wrong answer will deduct 5 points from your total score
             4 You have 5 seconds to answer a particular question""")
