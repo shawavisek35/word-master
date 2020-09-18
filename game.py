@@ -7,6 +7,7 @@ import pyttsx3
 import datetime
 import speech_recognition as sr
 import time
+import requests
 
 #importing the contents of the file game.txt
 f = open("game.txt","r")
@@ -30,7 +31,7 @@ def takeCommand():
     
     with sr.Microphone() as source:
         print("Listening.............")
-        #r.pause_threshold = 1
+        r.pause_threshold = 1
         
         audio = r.listen(source)
 
@@ -68,7 +69,7 @@ class Score(object):
 #for threading timer
 def timeUp():
     print("Times Up!.....\nYou can still guess the correct answer but your score will not be increased : ")
-    #speak("Time's up ! but you can still guess the correct answer but your score will not be calculated")
+    speak("Time's up ! but you can still guess the correct answer but your score will not be calculated")
     Score.flag = 1
 
 
@@ -78,6 +79,7 @@ class Scene(object):#Scene class
         print("Scene yet not configured............")
 
 class Game(Scene):#inheritng from scene class
+    
     def enter(self):
         Score.flag = 0
         l2 = []
@@ -93,8 +95,8 @@ class Game(Scene):#inheritng from scene class
                 l2.append(h)
         #printing incomplete word
         print(f"Your remaining life : {Score.life}")
-        speak(f"Your remaining life is {Score.life}")
-        speak("Your incomplete word is")
+        #speak(f"Your remaining life is {Score.life}")
+        #speak("Your incomplete word is")
         print("Word : ",end = " ")
 
         for j in range(len(c)):
@@ -108,13 +110,18 @@ class Game(Scene):#inheritng from scene class
         timer = threading.Timer(8.0,timeUp)
         timer.start()#starting the second thread
         print("Guess the correct word.....")
+        
         answe = "none"
         while(answe=="none"):
             answe = takeCommand()
             
-        
-        #answe = takeCommand()
         answer = answe.split(" ")
+        
+        app_id = '0d2e058d' #dictionary api app id
+        app_key = '1e3a9ae05fa064c632aec887792d61f0' #app key to authenticate requests
+        url= "https://od-api.oxforddictionaries.com/api/v2/lemmas" + "/" +  "en-us" + "/" + answer.lower()
+        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        
         if(b in answer):
             #if the user does not give answer
             if(Score.flag==1):
@@ -132,6 +139,17 @@ class Game(Scene):#inheritng from scene class
             
                 if(Score.k == len(game)):
                     return "over"
+        
+        #if answer exists in dictionary and time is not up        
+        elif("error" not in r.text and Score.flag!=1):
+            timer.cancel()#ending the second thread
+            Score.score = Score.score + 10
+            print(f"Wohoo! You made it.\nYour score is : {Score.score}\n")
+            speak(f"Wohoo! You made it and Your score is : {Score.score}")
+            
+            if(Score.k == len(game)):
+                    return "over"
+            
             
         else:
             if(Score.flag==1):
@@ -211,8 +229,7 @@ class Engine(object):
             currentScene = self.map.nextScene(next)
 
         currentScene.enter()
-
-
+        
 if __name__=="__main__":
     wishMe()
     
@@ -241,6 +258,3 @@ if __name__=="__main__":
 
         elif("exit" or "quit" in query):
             break
-
-        
-        #query = takeCommand()
