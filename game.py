@@ -9,8 +9,11 @@ import speech_recognition as sr
 import time
 
 #importing the contents of the file game.txt
-f = open("game.txt","r")
+f = open("easy.txt","r")
 game = f.read().split("\n")
+
+
+
 
 engine = pyttsx3.init('sapi5')#Initializing the voice given by microsoft
 voices = engine.getProperty('voices')#getting voice
@@ -64,6 +67,8 @@ class Score(object):
     k = 0
     life = 3
     flag = 0
+
+
 
 #for threading timer
 def timeUp():
@@ -129,8 +134,14 @@ class Game(Scene):#inheritng from scene class
                 Score.score = Score.score + 10
                 print(f"Wohoo! You made it.\nYour score is : {Score.score}\n")
                 speak(f"Wohoo! You made it and Your score is : {Score.score}")
+
+                # adding levels 
+
+               # if (Score.k < len(game)):
+                 #   level()
             
-                if(Score.k == len(game)):
+               # el
+                if (Score.k == len(game)):
                     return "over"
             
         else:
@@ -166,6 +177,20 @@ class End(Scene):#inheritng from scene class
         speak("You wished to discontinue the game")
         return "finished"
 
+# adding level function
+''' def level():
+    if Score.score < -10 :
+        f = open("easy.txt","r")
+       # game = f.read().split("\n")
+    elif Score.score > -10 :
+        f = open("medium.txt","r")
+       # game = f.read.split("\n")
+    else:
+        f = open("game.txt","r")
+       # game = f.read().split("\n")
+    return f''' 
+    
+
 class GameOver(Scene):#inheritng from scene class
     def enter(self):
         print("The game is over you made it to the second round.........\n")
@@ -174,8 +199,8 @@ class GameOver(Scene):#inheritng from scene class
 
 class LifeOver(Scene):
     def enter(self):
-        print("Your life is over..........\n")
-        speak("Your life is over")
+        print("Your lifes are over..........\n")
+        speak("Your lifes are over")
         return "finished"
 
 class Finished(Scene):#inheritng from scene class
@@ -190,7 +215,7 @@ class Map(object):
                 "end":End(),
                 "over":GameOver(),
                 "lifeN":LifeOver(),
-                "finished":Finished()}
+                "finished":Finished()}   # level added in mapping
     def __init__(self,start):
         self.start = start
 
