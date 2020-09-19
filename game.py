@@ -46,7 +46,18 @@ def takeCommand():
             return "none"
         
         return query
-        
+
+def isCorrect(answer):
+    temp=list(game)
+    app_id = '0d2e058d' #dictionary api app id
+    app_key = '1e3a9ae05fa064c632aec887792d61f0' #app key to authenticate requests
+    url= "https://od-api.oxforddictionaries.com/api/v2/lemmas" + "/" +  "en-us" + "/" + answer.lower()
+    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+    
+    if(answer in temp or "error" not in r.text):
+        return True
+    else:
+        return False        
 
 def wishMe():
     hour = int(datetime.datetime.now().hour)
@@ -95,8 +106,8 @@ class Game(Scene):#inheritng from scene class
                 l2.append(h)
         #printing incomplete word
         print(f"Your remaining life : {Score.life}")
-        #speak(f"Your remaining life is {Score.life}")
-        #speak("Your incomplete word is")
+        speak(f"Your remaining life is {Score.life}")
+        speak("Your incomplete word is")
         print("Word : ",end = " ")
 
         for j in range(len(c)):
@@ -117,39 +128,29 @@ class Game(Scene):#inheritng from scene class
             
         answer = answe.split(" ")
         
-        app_id = '0d2e058d' #dictionary api app id
-        app_key = '1e3a9ae05fa064c632aec887792d61f0' #app key to authenticate requests
-        url= "https://od-api.oxforddictionaries.com/api/v2/lemmas" + "/" +  "en-us" + "/" + answer.lower()
-        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-        
-        if(b in answer):
-            #if the user does not give answer
+        if(isCorrect(answer)=='True'):
+            #time is up
             if(Score.flag==1):
                 Score.flag = 0
                 
                 print(f"Time is up but Your answer is correct so we will not make any changes to your current score.\nYour Score is : {Score.score}")
                 speak(f"Time is up but Your answer is correct so we will not make any changes to your current score and Your Score is : {Score.score}")
-
-            #if the user gave the answer
+                
             else:
-                timer.cancel()#ending the second thread
                 Score.score = Score.score + 10
+                while(Score.flag!=1):
+                    ans=takeCommand()
+                    ans=ans.split(" ")
+                    if(isCorrect(ans)=='True'):
+                        Score.score = Score.score + 5
+                    else:
+                        break
+                timer.cancel()
                 print(f"Wohoo! You made it.\nYour score is : {Score.score}\n")
                 speak(f"Wohoo! You made it and Your score is : {Score.score}")
-            
+                
                 if(Score.k == len(game)):
                     return "over"
-        
-        #if answer exists in dictionary and time is not up        
-        elif("error" not in r.text and Score.flag!=1):
-            timer.cancel()#ending the second thread
-            Score.score = Score.score + 10
-            print(f"Wohoo! You made it.\nYour score is : {Score.score}\n")
-            speak(f"Wohoo! You made it and Your score is : {Score.score}")
-            
-            if(Score.k == len(game)):
-                    return "over"
-            
             
         else:
             if(Score.flag==1):
