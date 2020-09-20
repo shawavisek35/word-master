@@ -122,13 +122,13 @@ class Game(Scene):#inheritng from scene class
         timer.start()#starting the second thread
         print("Guess the correct word.....")
         
-        answe = "none"
-        while(answe=="none"):
-            answe = takeCommand()
+        ans = "none"
+        while(ans=="none"):
+            ans = takeCommand()
             
-        answer = answe.split(" ")
+        answer = ans.split(" ")
         
-        if(isCorrect(answer)=='True'):
+        if(isCorrect(ans)=='True'):
             #time is up
             if(Score.flag==1):
                 Score.flag = 0
@@ -139,9 +139,8 @@ class Game(Scene):#inheritng from scene class
             else:
                 Score.score = Score.score + 10
                 while(Score.flag!=1):
-                    ans=takeCommand()
-                    ans=ans.split(" ")
-                    if(isCorrect(ans)=='True'):
+                    ans2=takeCommand()
+                    if(isCorrect(ans2)=='True'):
                         Score.score = Score.score + 5
                     else:
                         break
@@ -243,12 +242,12 @@ if __name__=="__main__":
             print("""The rules of the game are : 
             1.You have only 3 lives.
             2.Each correct answer will give you 10 points.
-            3.Each wrong answer will deduct 5 points from your total score
+            3.Each wrong answer will deduct 5 points from your total score and decrease your life by 1
             4.You have 5 seconds to answer a particular question""")
             speak("""The rules of the game are : 
             1 You have only 3 lifes.
             2 Each correct answer will give you 10 points.
-            3 Each wrong answer will deduct 5 points from your total score
+            3 Each wrong answer will deduct 5 points from your total score and decrease your life by 1
             4 You have 5 seconds to answer a particular question""")
 
             time.sleep(1)
