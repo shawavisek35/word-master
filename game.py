@@ -1,3 +1,4 @@
+
 #Word Master game 
 
 #importing modules
@@ -95,8 +96,8 @@ class Game(Scene):#inheritng from scene class
                 l2.append(h)
         #printing incomplete word
         print(f"Your remaining life : {Score.life}")
-        #speak(f"Your remaining life is {Score.life}")
-        #speak("Your incomplete word is")
+        speak(f"Your remaining life is {Score.life}")
+        speak("Your incomplete word is")
         print("Word : ",end = " ")
 
         for j in range(len(c)):
@@ -184,6 +185,20 @@ class End(Scene):#inheritng from scene class
         speak("You wished to discontinue the game")
         return "finished"
 
+
+# adding level function
+''' def level():
+    if Score.score < -10 :
+        f = open("easy.txt","r")
+       # game = f.read().split("\n")
+    elif Score.score > -10 :
+        f = open("medium.txt","r")
+       # game = f.read.split("\n")
+    else:
+        f = open("game.txt","r")
+       # game = f.read().split("\n")
+    return f''' 
+
 class GameOver(Scene):#inheritng from scene class
     def enter(self):
         print("The game is over you made it to the second round.........\n")
@@ -258,3 +273,5 @@ if __name__=="__main__":
 
         elif("exit" or "quit" in query):
             break
+
+#query = takeCommand()
