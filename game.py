@@ -11,8 +11,32 @@ import time
 import requests
 
 #importing the contents of the file game.txt
-f = open("game.txt","r")
-game = f.read().split("\n")
+#f = open("game.txt","r")
+#game = f.read().split("\n")
+
+'''lev = int(input("enter your choice :"))
+if(lev == 1) :
+    print(" You choose easy level ")
+    speak(" You choose easy level ")
+    f = open("easy.txt","r")
+    game = f.read().split("\n")
+elif(lev == 2):
+     print(" You choose medium level ")
+     speak(" You choose medium level ")
+     f = open("medium.txt","r")
+     game = f.read().split("\n")
+elif (lev == 3):
+     print(" You choose easy level ")
+     speak(" You choose easy level ")
+     f = open("hard.txt","r")
+     game = f.read().split("\n")
+else:
+     print(" You did not choose a proper level ")
+     speak(" You did not choose a proper level ")''' 
+    
+
+
+
 
 engine = pyttsx3.init('sapi5')#Initializing the voice given by microsoft
 voices = engine.getProperty('voices')#getting voice
@@ -79,6 +103,26 @@ class Scene(object):#Scene class
     def enter(self):
         print("Scene yet not configured............")
 
+lev = int(input("enter your choice :"))
+if(lev == 1) :
+    print(" You choose easy level ")
+    speak(" You choose easy level ")
+    f = open("easy.txt","r")
+    game = f.read().split("\n")
+elif(lev == 2):
+     print(" You choose medium level ")
+     speak(" You choose medium level ")
+     f = open("medium.txt","r")
+     game = f.read().split("\n")
+elif (lev == 3):
+     print(" You choose easy level ")
+     speak(" You choose easy level ")
+     f = open("hard.txt","r")
+     game = f.read().split("\n")
+else:
+     print(" You did not choose a proper level ")
+     speak(" You did not choose a proper level ")
+
 class Game(Scene):#inheritng from scene class
     
     def enter(self):
@@ -137,9 +181,14 @@ class Game(Scene):#inheritng from scene class
                 Score.score = Score.score + 10
                 print(f"Wohoo! You made it.\nYour score is : {Score.score}\n")
                 speak(f"Wohoo! You made it and Your score is : {Score.score}")
+
+                
             
                 if(Score.k == len(game)):
                     return "over"
+
+                #else:
+                 #   level()
         
         #if answer exists in dictionary and time is not up        
         elif("error" not in r.text and Score.flag!=1):
@@ -187,17 +236,17 @@ class End(Scene):#inheritng from scene class
 
 
 # adding level function
-''' def level():
+'''def level():
     if Score.score < -10 :
         f = open("easy.txt","r")
-       # game = f.read().split("\n")
+        game = f.read().split("\n")
     elif Score.score > -10 :
         f = open("medium.txt","r")
-       # game = f.read.split("\n")
+        game = f.read.split("\n")
     else:
         f = open("game.txt","r")
-       # game = f.read().split("\n")
-    return f''' 
+        game = f.read().split("\n")
+    return "lev" '''
 
 class GameOver(Scene):#inheritng from scene class
     def enter(self):
@@ -223,7 +272,9 @@ class Map(object):
                 "end":End(),
                 "over":GameOver(),
                 "lifeN":LifeOver(),
-                "finished":Finished()}
+                "finished":Finished(),
+                "lev":level()
+                }
     def __init__(self,start):
         self.start = start
 
@@ -258,12 +309,24 @@ if __name__=="__main__":
             1.You have only 3 lives.
             2.Each correct answer will give you 10 points.
             3.Each wrong answer will deduct 5 points from your total score
-            4.You have 5 seconds to answer a particular question""")
+            4.You have 5 seconds to answer a particular question
+            
+            
+            Choose your difficulty level :
+            1. Easy 
+            2. Medium
+            3. Hard  """)
             speak("""The rules of the game are : 
             1 You have only 3 lifes.
             2 Each correct answer will give you 10 points.
             3 Each wrong answer will deduct 5 points from your total score
-            4 You have 5 seconds to answer a particular question""")
+            4 You have 5 seconds to answer a particular question
+            
+            
+            Choose your difficulty level :
+            1. Easy 
+            2. Medium
+            3. Hard  """)
 
             time.sleep(1)
             
