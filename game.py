@@ -1,3 +1,4 @@
+
 #Word Master game 
 
 #importing modules
@@ -46,18 +47,7 @@ def takeCommand():
             return "none"
         
         return query
-
-def isCorrect(answer):
-    temp=list(game)
-    app_id = '0d2e058d' #dictionary api app id
-    app_key = '1e3a9ae05fa064c632aec887792d61f0' #app key to authenticate requests
-    url= "https://od-api.oxforddictionaries.com/api/v2/lemmas" + "/" +  "en-us" + "/" + answer.lower()
-    r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
-    
-    if(answer in temp or "error" not in r.text):
-        return True
-    else:
-        return False        
+        
 
 def wishMe():
     hour = int(datetime.datetime.now().hour)
@@ -122,34 +112,45 @@ class Game(Scene):#inheritng from scene class
         timer.start()#starting the second thread
         print("Guess the correct word.....")
         
-        ans = "none"
-        while(ans=="none"):
-            ans = takeCommand()
+        answe = "none"
+        while(answe=="none"):
+            answe = takeCommand()
             
-        answer = ans.split(" ")
+        answer = answe.split(" ")
         
-        if(isCorrect(ans)=='True'):
-            #time is up
+        app_id = '0d2e058d' #dictionary api app id
+        app_key = '1e3a9ae05fa064c632aec887792d61f0' #app key to authenticate requests
+        url= "https://od-api.oxforddictionaries.com/api/v2/lemmas" + "/" +  "en-us" + "/" + answer.lower()
+        r = requests.get(url, headers = {'app_id': app_id, 'app_key': app_key})
+        
+        if(b in answer):
+            #if the user does not give answer
             if(Score.flag==1):
                 Score.flag = 0
                 
                 print(f"Time is up but Your answer is correct so we will not make any changes to your current score.\nYour Score is : {Score.score}")
                 speak(f"Time is up but Your answer is correct so we will not make any changes to your current score and Your Score is : {Score.score}")
-                
+
+            #if the user gave the answer
             else:
+                timer.cancel()#ending the second thread
                 Score.score = Score.score + 10
-                while(Score.flag!=1):
-                    ans2=takeCommand()
-                    if(isCorrect(ans2)=='True'):
-                        Score.score = Score.score + 5
-                    else:
-                        break
-                timer.cancel()
                 print(f"Wohoo! You made it.\nYour score is : {Score.score}\n")
                 speak(f"Wohoo! You made it and Your score is : {Score.score}")
-                
+            
                 if(Score.k == len(game)):
                     return "over"
+        
+        #if answer exists in dictionary and time is not up        
+        elif("error" not in r.text and Score.flag!=1):
+            timer.cancel()#ending the second thread
+            Score.score = Score.score + 10
+            print(f"Wohoo! You made it.\nYour score is : {Score.score}\n")
+            speak(f"Wohoo! You made it and Your score is : {Score.score}")
+            
+            if(Score.k == len(game)):
+                    return "over"
+            
             
         else:
             if(Score.flag==1):
@@ -183,6 +184,20 @@ class End(Scene):#inheritng from scene class
         print("You wished to discontinue the game.........\n")
         speak("You wished to discontinue the game")
         return "finished"
+
+
+# adding level function
+''' def level():
+    if Score.score < -10 :
+        f = open("easy.txt","r")
+       # game = f.read().split("\n")
+    elif Score.score > -10 :
+        f = open("medium.txt","r")
+       # game = f.read.split("\n")
+    else:
+        f = open("game.txt","r")
+       # game = f.read().split("\n")
+    return f''' 
 
 class GameOver(Scene):#inheritng from scene class
     def enter(self):
@@ -242,12 +257,12 @@ if __name__=="__main__":
             print("""The rules of the game are : 
             1.You have only 3 lives.
             2.Each correct answer will give you 10 points.
-            3.Each wrong answer will deduct 5 points from your total score and decrease your life by 1
+            3.Each wrong answer will deduct 5 points from your total score
             4.You have 5 seconds to answer a particular question""")
             speak("""The rules of the game are : 
             1 You have only 3 lifes.
             2 Each correct answer will give you 10 points.
-            3 Each wrong answer will deduct 5 points from your total score and decrease your life by 1
+            3 Each wrong answer will deduct 5 points from your total score
             4 You have 5 seconds to answer a particular question""")
 
             time.sleep(1)
@@ -258,3 +273,5 @@ if __name__=="__main__":
 
         elif("exit" or "quit" in query):
             break
+
+#query = takeCommand()
